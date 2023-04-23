@@ -8,7 +8,9 @@
     "dockerfile": "Dockerfile"
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
   // Use 'postCreateCommand' to run commands after the container is created.
@@ -18,10 +20,11 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "rebornix.ruby",
-        "castwide.solargraph",
-        "misogi.ruby-rubocop"
-      ],
+		"rebornix.ruby",
+		"castwide.solargraph",
+		"misogi.ruby-rubocop",
+		"github.vscode-github-actions"
+	],
       "settings": {
         "ruby.useBundler": true,
         "ruby.format": "rubocop",
