@@ -208,5 +208,21 @@ module TomatoShrieker
     def self.purge_all
       all.select(&:purge?).each(&:purge)
     end
+
+    def remote_keyword_tags?
+      return self['/source/remote_keyword/enable'] == true
+    end
+
+    def remote_keyword?(keyword)
+      ignores = (self['/source/remote_keyword/ignore'] || [])
+      return ignores.none? {|v| Regexp.new(v).match?(keyword)}
+    end
+
+    def remote_keyword_replace(keyword)
+      (self['/source/remote_keyword/replace_rules'] || []).each do |v|
+        keyword = keyword.gsub(Regexp.new(v['pattern']), v['replace'])
+      end
+      return keyword
+    end
   end
 end

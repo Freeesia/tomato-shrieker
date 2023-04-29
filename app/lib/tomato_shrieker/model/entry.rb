@@ -1,4 +1,5 @@
 require 'sequel/model'
+require 'metainspector'
 
 module TomatoShrieker
   class Entry < Sequel::Model(:entry)
@@ -29,6 +30,7 @@ module TomatoShrieker
         tags.concat(feed.tags.clone)
         tags.concat(JSON.parse(extra_tags))
         tags.concat(fetch_remote_tags) if feed.remote_tagging?
+        tags.concat(fetch_keyword_tags) if feed.remote_keyword_tags?
         tags.select! {|v| feed.tag_min_length < v.to_s.length}
         @tags = tags.create_tags
       end
@@ -45,6 +47,15 @@ module TomatoShrieker
         contents.push(nokogiri.xpath("//#{v}").inner_text)
       end
       return feed.mulukhiya.search_hashtags(contents.join(' '))
+    end
+
+    def fetch_keyword_tags
+      page = MetaInspector.new(uri)
+      page.meta['keywords'].split(',')
+        .map(&:strip)
+        .filter {|v| feed.remote_keyword?(v)}
+        .map {|v| feed.remote_keyword_replace(v)}
+        .uniq
     end
 
     def uri
