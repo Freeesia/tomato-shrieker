@@ -1,14 +1,14 @@
 #!/bin/sh
-# rsyslogをバックグラウンドで実行
-rsyslogd
 
-# bundle exec rake restart
-bundle exec rake restart
+# INTERVALが設定されていない場合、1時間をデフォルトに設定
+INTERVAL=${INTERVAL:-3600}
 
-# 引数があったら実行する
-if [ "$#" -gt 0 ]; then
-  exec "$@"
-# 引数がなかったらsleep infinityする
-else
-  sleep infinity
-fi
+# 定期的にbundle exec rake restartを実行
+while true; do
+  bundle exec rake --task
+  echo "Running 'bundle exec rake restart'..."
+  bundle exec rake restart
+
+  echo "Sleeping for ${INTERVAL} seconds..."
+  sleep ${INTERVAL}
+done
