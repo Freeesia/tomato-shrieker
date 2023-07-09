@@ -23,7 +23,8 @@
 		"rebornix.ruby",
 		"castwide.solargraph",
 		"misogi.ruby-rubocop",
-		"github.vscode-github-actions"
+		"github.vscode-github-actions",
+		"KoichiSasada.vscode-rdbg"
 	],
       "settings": {
         "ruby.useBundler": true,
