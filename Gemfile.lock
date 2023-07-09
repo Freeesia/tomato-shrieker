@@ -306,7 +306,6 @@ PLATFORMS
 
 DEPENDENCIES
   debug
-  faye-websocket!
   feedjira (~> 3.0)
   ginseng-core!
   ginseng-fediverse!
