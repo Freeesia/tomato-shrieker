@@ -1,14 +1,17 @@
 # tomato-shrieker
 
-![release](https://img.shields.io/github/v/release/pooza/tomato-shrieker.svg)
-![test](https://github.com/pooza/tomato-shrieker/workflows/test/badge.svg)
+![release](https://img.shields.io/github/v/release/Freeesia/tomato-shrieker.svg)
+![test](https://github.com/Freeesia/tomato-shrieker/workflows/test/badge.svg)
+
+[pooza/tomato-shrieker](https://github.com/pooza/tomato-shrieker)からのフォーク   
+変更点は[こちら](fork.md)
 
 ## できること
 
 - 会話をしない単純なつぶやきボットを作成するツールです。
 - 投稿のソース・投稿先・スケジュールの3要素を組み合わせて、定義ファイル（YAML形式）に記述します。
 - 定義ファイルに複数のボットを定義し、まとめて管理することが出来ます。
-- 詳細は[wiki](https://github.com/pooza/tomato-shrieker/wiki)にて。
+- 詳細は[wiki](https://github.com/Freeesia/tomato-shrieker/wiki)にて。
 
 ### 投稿のソース
 
