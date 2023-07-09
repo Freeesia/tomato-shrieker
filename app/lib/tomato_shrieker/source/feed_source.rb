@@ -189,12 +189,13 @@ module TomatoShrieker
 
     def summary
       values = {id:, category:, multi: multi_entries?}
-      values[:entries] = entries.map do |entry|
+      values[:entries] = fetch.map do |entry|
         {
           date: entry.published.strftime('%Y/%m/%d %R'),
           title: entry.title,
           link: entry.url,
           ignore: ignore_entry?(entry),
+          tags: entry.tags,
         }
       end
       return values
@@ -211,6 +212,14 @@ module TomatoShrieker
 
     def remote_keyword_tags?
       return self['/source/remote_keyword/enable'] == true
+    end
+
+    def remote_xpath_tags
+      return self['/source/remote_xpath_tags']
+    end
+
+    def remote_xpath_tags?
+      return self['/source/remote_xpath_tags'].present?
     end
 
     def remote_keyword?(keyword)

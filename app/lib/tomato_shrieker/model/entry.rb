@@ -30,7 +30,8 @@ module TomatoShrieker
         tags.concat(feed.tags.clone)
         tags.concat(JSON.parse(extra_tags))
         tags.concat(fetch_remote_tags) if feed.remote_tagging?
-        tags.concat(fetch_keyword_tags) if feed.remote_keyword_tags?
+        tags.concat(fetch_meta_tags) if feed.remote_keyword_tags?
+        tags.concat(fetch_xpath_tags(feed.remote_xpath_tags)) if feed.remote_xpath_tags?
         tags.select! {|v| feed.tag_min_length < v.to_s.length}
         @tags = tags.create_tags
       end
@@ -49,13 +50,19 @@ module TomatoShrieker
       return feed.mulukhiya.search_hashtags(contents.join(' '))
     end
 
-    def fetch_keyword_tags
+    def fetch_meta_tags
       page = MetaInspector.new(uri)
-      page.meta['keywords'].split(',')
+      (page.meta['keywords'] || '').split(',')
+        .concat(page.meta_tags['name']['cxenseparse:iid-giga-name'] || [])
         .map(&:strip)
         .filter {|v| feed.remote_keyword?(v)}
         .map {|v| feed.remote_keyword_replace(v)}
         .uniq
+    end
+
+    def fetch_xpath_tags(xpath)
+      nokogiri.xpath(xpath)
+        .map {|v| v.inner_text.strip.delete_prefix('#')}
     end
 
     def uri
